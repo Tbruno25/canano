@@ -1,0 +1,6 @@
+aenum==2.2.3
+in-place==0.4.0
+pkg-resources==0.0.0
+python-can==3.3.2
+RPi.GPIO==0.7.0
+wrapt==1.12.1
