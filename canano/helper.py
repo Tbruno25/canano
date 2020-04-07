@@ -1,8 +1,5 @@
 from enum import Enum
 
-# RPI pin to trigger relay.
-pin = 4
-
 
 class State(Enum):
     ON = 1
