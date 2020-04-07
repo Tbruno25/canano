@@ -1,12 +1,7 @@
 import RPi.GPIO as GPIO
 import subprocess as sp
 
-from .helper import reset, pin, State, SetState
-
-# Initialize pin for relay control.
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(pin, GPIO.OUT)
+from .helper import reset, Enum, State, SetState
 
 
 def run_script(script):
@@ -23,6 +18,17 @@ def run_script(script):
     return wrapper if callable(script) else run(script)
 
 
+class PinMap(Enum):
+    def __init__(self, pin, is_input):
+        self.pin = pin
+        self.is_input = is_input
+
+    button = 21, True
+    red_led = 6, False
+    green_led = 13, False
+    relay = 17, False
+
+
 class Interface(SetState):
     def __init__(self, id="can0"):
         self.id = id
@@ -35,7 +41,7 @@ class Interface(SetState):
     @state.setter
     @run_script
     def state(self, state):
-        return f"ip link set {self.id} " + ("down", "up")[int(state.value)]
+        return f"ip link set {self.id} " + ("down", "up")[state.value]
 
     @property
     @run_script
@@ -58,4 +64,8 @@ class Interface(SetState):
         return f"candump {args} {self.id}"
 
 
-interface = Interface()
+# Initialize pins on import
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+for pin in PinMap:
+    GPIO.setup(pin.pin, GPIO.IN) if pin.is_input else GPIO.setup(pin.pin, GPIO.OUT)
