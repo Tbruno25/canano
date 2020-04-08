@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from can import Bus
 
-from .helper import reset, pin, State, SetState
+from .helper import reset, State, SetState
 
 
 class Component(SetState):
@@ -10,11 +10,14 @@ class Component(SetState):
 
     @property
     def state(self):
-        return State(GPIO.input(pin)).name
+        return State(GPIO.input(self.obj.pin))
 
     @state.setter
     def state(self, state):
-        GPIO.setup(pin, int(state.value))
+        if self.obj.is_input:
+            raise AttributeError("This component cannot be set")
+        else:
+            GPIO.setup(self.obj.pin, state.value)
 
 
 class Can(SetState):
@@ -32,7 +35,7 @@ class Can(SetState):
 
     @property
     def state(self):
-        return State(self._state).name
+        return State(self._state)
 
     @state.setter
     def state(self, state):
@@ -66,7 +69,4 @@ class Can(SetState):
             received = self.bus.recv(2)
             if received:
                 return f"Baudrate successfully detected!"
-        return "Something went wrong. Verify connections and try again."
-
-
-relay = Relay()
+        raise AttributeError("Something went wrong. Verify connections and try again.")
