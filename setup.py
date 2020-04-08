@@ -8,7 +8,7 @@ with open("requirements.txt") as r:
 
 setuptools.setup(
     name="canano",
-    version="0.0.1",
+    version="0.0.2",
     author="Tj Bruno",
     author_email="Tbruno25@gmail.com",
     description="Python library for Canano Raspberry Pi add-on board",
