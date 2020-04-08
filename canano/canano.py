@@ -4,7 +4,7 @@ from can import Bus
 from .helper import reset, pin, State, SetState
 
 
-class Relay(SetState):
+class Component(SetState):
     @property
     def state(self):
         return State(GPIO.input(pin)).name
