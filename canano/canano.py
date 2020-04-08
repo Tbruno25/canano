@@ -5,6 +5,9 @@ from .helper import reset, pin, State, SetState
 
 
 class Component(SetState):
+    def __init__(self, pin_obj):
+        self.obj = pin_obj
+
     @property
     def state(self):
         return State(GPIO.input(pin)).name
