@@ -1,4 +1,6 @@
-from .pi import interface
-from .canano import Can, relay
+from . import pi, canano
 
-canano = Can(interface)
+for pin in pi.PinMap:
+    globals()[pin.name] = canano.Component(pin)
+
+canano = canano.Can(pi.Interface())
