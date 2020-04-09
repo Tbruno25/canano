@@ -1,6 +1,7 @@
 # canano
 
-Python library for Canano Raspberry Pi add-on board.
+Python library for Canano Raspberry Pi add-on board. <img align="right" src="https://i.ibb.co/FnDczVM/board2.jpg">
+
 
 ## Installation
 
@@ -21,9 +22,6 @@ sudo python3 scripts/rpi_setup.py
 sudo reboot
 ```
 
-
-
-
 ## Usage
 
 ```python
@@ -41,3 +39,6 @@ canano.bus.recv() # returns next message
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+<p align="center">
+<img src="https://i.ibb.co/1XXtwDD/board.jpg">
+</p
