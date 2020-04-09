@@ -17,7 +17,7 @@ class Component(SetState):
         if self.obj.is_input:
             raise AttributeError("This component cannot be set")
         else:
-            GPIO.setup(self.obj.pin, state.value)
+            GPIO.output(self.obj.pin, state.value)
 
 
 class Can(SetState):
