@@ -68,4 +68,7 @@ class Interface(SetState):
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 for pin in PinMap:
-    GPIO.setup(pin.pin, GPIO.IN) if pin.is_input else GPIO.setup(pin.pin, GPIO.OUT)
+    if pin.is_input:
+        GPIO.setup(pin.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    else:
+        GPIO.setup(pin.pin, GPIO.OUT)
