@@ -23,18 +23,24 @@ sudo reboot
 ```
 
 ## Usage
-
+The api currently gives you control over the components on the board
 ```python
-from canano import canano, relay
+from canano import red_led, green_led, relay, button
 
-relay.on() # activate
-relay.off() # deactivate
-
-canano.interface.state # returns socketcan state
-canano.state # returns python-can state
+red_led.on() # activate
+green_led.off() # deactivate
+button.state # returns state 
+```
+canano controls the socketcan interface allowing you to easily adjust on the fly
+```python
+from canano import canano
 canano.baud = 250000 # sets bus baudrate to 250k
+canano.reset() # clears buffer 
+canano.bus # python-can bus object 
 canano.bus.recv() # returns next message
 ```
+Play around with it to find interesting use cases! 
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
