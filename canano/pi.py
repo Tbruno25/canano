@@ -56,6 +56,11 @@ class Interface(SetState):
 
     @reset
     @run_script
+    def listen_only(self, state):
+        return f"ip link set {self.id} type can listen-only {state.name.lower()}"
+
+    @reset
+    @run_script
     def recovery(self):
         return f"ip link set {self.id} type can restart-ms 100"
 
