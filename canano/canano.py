@@ -64,7 +64,6 @@ class Can(SetState):
         Sets interface to each available rate and listens.
         Exits if messages are received within 2.5 seconds.
         """
-        self.interface.recovery()
         for rate in self.baudrates:
             self.baud = rate
             received = self.bus.recv(2)
