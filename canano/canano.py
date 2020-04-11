@@ -24,6 +24,7 @@ class Can(SetState):
     def __init__(self, interface_obj, type="socketcan"):
         self.interface = interface_obj
         self.type = type
+        self.interface.listen_only(State.ON)
         self.state = State(self.interface.state == "up")
         self.baudrates = (  # Common automotive CAN bus speeds
             33000,
