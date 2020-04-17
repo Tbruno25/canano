@@ -1,7 +1,32 @@
+
 import RPi.GPIO as GPIO
+import pysocketcan as pysc
+from enum import Enum
 from can import Bus
 
-from .helper import reset, State, SetState
+
+class State(Enum):
+    ON = 1
+    OFF = 0
+
+class SetState:
+    
+    def on(self):
+        self.state = State.ON
+
+    def off(self):
+        self.state = State.OFF
+
+
+class PinMap(Enum):
+    def __init__(self, pin, is_input):
+        self.pin = pin
+        self.is_input = is_input
+
+    button = 21, True
+    red_led = 6, False
+    green_led = 13, False
+    relay = 17, False
 
 
 class Component(SetState):
@@ -21,11 +46,11 @@ class Component(SetState):
 
 
 class Can(SetState):
-    def __init__(self, interface_obj, type="socketcan"):
-        self.interface = interface_obj
+    def __init__(self, type="socketcan"):
         self.type = type
-        self.interface.listen_only(State.ON)
-        self.state = State(self.interface.state == "up")
+        self.interface = pysc.Interface()
+        self.interface.listen_only = True
+        self.state = State(self.interface.state.value)
         self.baudrates = (  # Common automotive CAN bus speeds
             33000,
             100000,
@@ -51,7 +76,6 @@ class Can(SetState):
         return self.interface.baud
 
     @baud.setter
-    @reset
     def baud(self, rate):
         if rate not in self.baudrates:
             return print(f"Invalid. Please choose from {self.baudrates}")
